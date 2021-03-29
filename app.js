@@ -76,9 +76,13 @@ const UICtrl = (function () {
     const UISelectors = {
         itemList: "#item-list",
         addBtn: ".add-btn",
+        updateBtn: ".update-btn",
+        deleteBtn: ".delete-btn",
+        backBtn: ".back-btn",
         itemNameInput: "#item-name",
         itemCaloriesInput: "#item-calories",
         totalCalories: ".total-calories",
+        editBtn: "edit-item",
     };
 
     // Public Methods
@@ -122,7 +126,7 @@ const UICtrl = (function () {
             li.className = "collection-item";
 
             //add ID
-            li.id = `item-${item.ID}`;
+            li.id = `item-${item.id}`;
 
             // Add HTML, just what's inside
             li.innerHTML = `
@@ -152,6 +156,17 @@ const UICtrl = (function () {
                 UISelectors.totalCalories
             ).textContent = totalCalories;
         },
+        // create clear edit state function, hide buttons and show add
+        clearEditState: function () {
+            UICtrl.clearInput();
+
+            document.querySelector(UISelectors.updateBtn).style.display =
+                "none";
+            document.querySelector(UISelectors.deleteBtn).style.display =
+                "none";
+            document.querySelector(UISelectors.backBtn).style.display = "none";
+            document.querySelector(UISelectors.addBtn).style.display = "inline";
+        },
         // return the UI selectors
         getSelectors: function () {
             return UISelectors;
@@ -170,6 +185,11 @@ const App = (function (ItemCtrl, UICtrl) {
         document
             .querySelector(UISelectors.addBtn)
             .addEventListener("click", itemAddSubmit);
+
+        // edit icon click event
+        document
+            .querySelector(UISelectors.itemList)
+            .addEventListener("click", itemUpdateSubmit);
     };
 
     // Add item submit function
@@ -199,9 +219,27 @@ const App = (function (ItemCtrl, UICtrl) {
         e.preventDefault();
     };
 
+    // update item submit function
+    const itemUpdateSubmit = function (e) {
+        //init the Ui selectors
+        const UISelectors = UICtrl.getSelectors();
+
+        // check to work only when the click is on the edit button
+        if (e.target.classList.contains(UISelectors.editBtn)) {
+            // Get list item id (item-0, item-1) of the parent
+            const listId = e.target.parentNode.parentNode.id;
+            console.log(listId);
+        }
+
+        e.preventDefault();
+    };
+
     // Public methods
     return {
         init: function () {
+            // clear edit state / set initial state
+            UICtrl.clearEditState();
+
             // Fetch items from data structure
             const items = ItemCtrl.getItems();
 
