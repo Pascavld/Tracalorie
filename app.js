@@ -115,6 +115,7 @@ const UICtrl = (function () {
     // Create the UI Selectors object with their ids
     const UISelectors = {
         itemList: "#item-list",
+        listItems: "#item-list li",
         addBtn: ".add-btn",
         updateBtn: ".update-btn",
         deleteBtn: ".delete-btn",
@@ -180,6 +181,28 @@ const UICtrl = (function () {
             document
                 .querySelector(UISelectors.itemList)
                 .insertAdjacentElement("beforeend", li);
+        },
+        // create update list item function
+        updateListItem: function (item) {
+            // get the list items
+            let listItems = document.querySelectorAll(UISelectors.listItems);
+
+            // turn node list into array
+            listItems = Array.from(listItems);
+
+            // loop through the list items, get the id of the item list and if it matches and if it does change the inner html of that element
+            listItems.forEach(function (listItem) {
+                const itemID = listItem.getAttribute("id");
+
+                if (itemID === `item-${item.id}`) {
+                    document.querySelector(`#${itemID}`).innerHTML = `
+                    <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+                    <a href="#" class="secondary-content"
+                        ><i class="edit-item fa fa-pencil"></i
+                    ></a>
+                    `;
+                }
+            });
         },
         // create clear input function
         clearInput: function () {
@@ -328,6 +351,18 @@ const App = (function (ItemCtrl, UICtrl) {
 
         // update item
         const updatedItem = ItemCtrl.updateItem(input.name, input.calories);
+
+        // Update ui
+        UICtrl.updateListItem(updatedItem);
+
+        // Get total calories
+        const totalCalories = ItemCtrl.getTotalCalories();
+
+        // Add total cal to the UI
+        UICtrl.showTotalCalories(totalCalories);
+
+        // clear the edit state
+        UICtrl.clearEditState();
 
         e.preventDefault();
     };
