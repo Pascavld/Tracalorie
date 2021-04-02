@@ -62,6 +62,25 @@ const ItemCtrl = (function () {
 
             return found;
         },
+        // create update item function
+        updateItem: function (name, calories) {
+            // calories to number
+            calories = parseInt(calories);
+
+            // create found and set to null
+            let found = null;
+
+            // loop through the items, and if ids are the same update name and calories
+            data.items.forEach(function (item) {
+                if (item.id === data.currentItem.id) {
+                    item.name = name;
+                    item.calories = calories;
+                    found = item;
+                }
+            });
+
+            return found;
+        },
         // create the set current item function
         setCurrentItem: function (item) {
             data.currentItem = item;
@@ -227,9 +246,22 @@ const App = (function (ItemCtrl, UICtrl) {
             .querySelector(UISelectors.addBtn)
             .addEventListener("click", itemAddSubmit);
 
+        // disable submit on enter, prevent default and return false
+        document.addEventListener("keypress", function (e) {
+            if (e.keyCode === 13 || e.which === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
         // edit icon click event
         document
             .querySelector(UISelectors.itemList)
+            .addEventListener("click", itemEditClick);
+
+        // update item event
+        document
+            .querySelector(UISelectors.updateBtn)
             .addEventListener("click", itemUpdateSubmit);
     };
 
@@ -260,8 +292,8 @@ const App = (function (ItemCtrl, UICtrl) {
         e.preventDefault();
     };
 
-    // update item submit function
-    const itemUpdateSubmit = function (e) {
+    // item edit click function
+    const itemEditClick = function (e) {
         //init the Ui selectors
         const UISelectors = UICtrl.getSelectors();
 
@@ -285,6 +317,17 @@ const App = (function (ItemCtrl, UICtrl) {
             // add item to Form
             UICtrl.addItemToForm();
         }
+
+        e.preventDefault();
+    };
+
+    // create update item submit function
+    const itemUpdateSubmit = function (e) {
+        // get item input
+        const input = UICtrl.getItemInput();
+
+        // update item
+        const updatedItem = ItemCtrl.updateItem(input.name, input.calories);
 
         e.preventDefault();
     };
