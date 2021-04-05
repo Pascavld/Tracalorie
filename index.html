@@ -2,33 +2,29 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
         />
         <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous"
         />
-        <style></style>
         <title>Tracalorie | Meal & Calorie Tracker</title>
     </head>
     <body>
-        <!-- Nav Bar -->
+        <!-- Navbar -->
         <nav>
-            <div class="nav-wrapper orange darken-3">
+            <div class="nav-wrapper blue">
                 <div class="container">
                     <a href="#" class="brand-logo center">Tracalorie</a>
                     <ul class="right">
                         <li>
-                            <a
-                                href="#"
-                                class="clear-btn btn orange lighten-1"
-                                style="padding: 0px 30px 0px 30px"
+                            <a href="#" class="clear-btn btn blue lighten-3"
                                 >Clear All</a
                             >
                         </li>
@@ -36,7 +32,9 @@
                 </div>
             </div>
         </nav>
+
         <br />
+
         <div class="container">
             <!-- Form Card -->
             <div class="card">
@@ -60,83 +58,60 @@
                                 />
                                 <label for="item-calories">Calories</label>
                             </div>
-                            <button
-                                class="add-btn btn orange darken-3"
-                                style="padding: 0px 30px 0px 30px"
-                            >
-                                <i
-                                    class="fa fa-plus"
-                                    style="font-size: 14px !important"
-                                ></i>
-                                Add Meal
+                            <button class="add-btn btn blue darken-3">
+                                <i class="fa fa-plus"></i> Add Meal
                             </button>
-                            <button
-                                class="update-btn btn blue"
-                                style="padding: 0px 30px 0px 30px"
-                            >
-                                <i
-                                    class="fa fa-pencil-square-o"
-                                    style="font-size: 14px !important"
-                                ></i>
-                                Update Add Meal
+                            <button class="update-btn btn orange">
+                                <i class="fa fa-pencil-square-o"></i> Update
+                                Meal
                             </button>
-                            <button
-                                class="delete-btn btn red"
-                                style="padding: 0px 30px 0px 30px"
-                            >
-                                <i
-                                    class="fa fa-remove"
-                                    style="font-size: 14px !important"
-                                ></i>
-                                Delete Meal
+                            <button class="delete-btn btn red">
+                                <i class="fa fa-remove"></i> Delete Meal
                             </button>
-                            <button
-                                class="back-btn btn grey pull-right"
-                                style="padding: 0px 30px 0px 30px"
-                            >
-                                <i
-                                    class="fa fa-chevron-circle-left"
-                                    style="font-size: 14px !important"
-                                ></i>
-                                Back
+                            <button class="back-btn btn grey pull-right">
+                                <i class="fa fa-chevron-circle-left"></i> Back
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+
             <!-- Calorie Count -->
-            <h4 class="center-align">
+            <h3 class="center-align">
                 Total Calories: <span class="total-calories">0</span>
-            </h4>
+            </h3>
+
             <!-- Item List -->
             <ul id="item-list" class="collection">
-                <!-- <li class="collection-item" id="item-0">
-                    <strong>Steak Dinner: </strong> <em>1200 Calories</em>
-                    <a href="#" class="secondary-content"
-                        ><i class="edit-item fa fa-pencil"></i
-                    ></a>
-                </li>
-                <li class="collection-item" id="item-1">
-                    <strong>Cookie: </strong> <em>400 Calories</em>
-                    <a href="#" class="secondary-content"
-                        ><i class="edit-item fa fa-pencil"></i
-                    ></a>
-                </li>
-                <li class="collection-item" id="item-2">
-                    <strong>Eggs: </strong> <em>300 Calories</em>
-                    <a href="#" class="secondary-content"
-                        ><i class="edit-item fa fa-pencil"></i
-                    ></a>
-                </li> -->
+                <!--
+      <li class="collection-item" id="item-0">
+        <strong>Steak Dinner: </strong> <em>1200 Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      </li>
+      <li class="collection-item" id="item-0">
+        <strong>Cookie: </strong> <em>400 Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      </li>
+      <li class="collection-item" id="item-0">
+        <strong>Eggs: </strong> <em>300 Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      </li>
+    -->
             </ul>
         </div>
 
         <script
-            src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"
         ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
         <script src="app.js"></script>
     </body>
 </html>

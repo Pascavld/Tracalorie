@@ -247,6 +247,11 @@ const App = (function (ItemCtrl, UICtrl) {
         document
             .querySelector(UISelectors.updateBtn)
             .addEventListener("click", itemUpdateSubmit);
+
+        // Back item event
+        document
+            .querySelector(UISelectors.backBtn)
+            .addEventListener("click", UISelectors.clearEditState);
     };
 
     // Add item submit
