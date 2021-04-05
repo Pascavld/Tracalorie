@@ -94,6 +94,10 @@ const ItemCtrl = (function () {
             // remove item
             data.items.splice(index, 1);
         },
+        // create the delete all items function
+        clearAllItems: function () {
+            data.items = [];
+        },
         // create the set current item function
         setCurrentItem: function (item) {
             data.currentItem = item;
@@ -133,6 +137,7 @@ const UICtrl = (function () {
         updateBtn: ".update-btn",
         deleteBtn: ".delete-btn",
         backBtn: ".back-btn",
+        clearBtn: ".clear-btn",
         itemNameInput: "#item-name",
         itemCaloriesInput: "#item-calories",
         totalCalories: ".total-calories",
@@ -238,6 +243,19 @@ const UICtrl = (function () {
             ).value = ItemCtrl.getCurrentItem().calories;
             UICtrl.showEditState();
         },
+        //create remove items function
+        removeItems: function () {
+            // get the all list items
+            let listItems = document.querySelectorAll(UISelectors.listItems);
+
+            // turn node list into array
+            listItems = Array.from(listItems);
+
+            // loop through the array and remove each item
+            listItems.forEach(function (item) {
+                item.remove();
+            });
+        },
         // create hide list function
         hideList: function () {
             document.querySelector(UISelectors.itemList).style.display = "none";
@@ -310,6 +328,11 @@ const App = (function (ItemCtrl, UICtrl) {
         document
             .querySelector(UISelectors.deleteBtn)
             .addEventListener("click", itemDeleteSubmit);
+
+        // clear all button event
+        document
+            .querySelector(UISelectors.clearBtn)
+            .addEventListener("click", clearAllItemsClick);
 
         // Back button event
         document
@@ -430,6 +453,24 @@ const App = (function (ItemCtrl, UICtrl) {
         UICtrl.showTotalCalories(totalCalories);
 
         e.preventDefault();
+    };
+
+    // create the clear items event function
+    const clearAllItemsClick = function () {
+        // delete all items from data structure
+        ItemCtrl.clearAllItems();
+
+        // Get total calories
+        const totalCalories = ItemCtrl.getTotalCalories();
+
+        // Add total cal to the UI
+        UICtrl.showTotalCalories(totalCalories);
+
+        // remove from UI
+        UICtrl.removeItems();
+
+        // hide the ul
+        UICtrl.hideList();
     };
 
     // Public methods
