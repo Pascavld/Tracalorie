@@ -81,6 +81,19 @@ const ItemCtrl = (function () {
 
             return found;
         },
+        // create the delete item function
+        deleteItem: function (id) {
+            // get the ids using map
+            const ids = data.items.map(function (item) {
+                return item.id;
+            });
+
+            // get the index
+            const index = ids.indexOf(id);
+
+            // remove item
+            data.items.splice(index, 1);
+        },
         // create the set current item function
         setCurrentItem: function (item) {
             data.currentItem = item;
@@ -204,6 +217,12 @@ const UICtrl = (function () {
                 }
             });
         },
+        // create the delete list item function, get the id, select and remove it
+        deleteListItem: function (id) {
+            const itemID = `#item-${id}`;
+            const item = document.querySelector(itemID);
+            item.remove();
+        },
         // create clear input function
         clearInput: function () {
             document.querySelector(UISelectors.itemNameInput).value = "";
@@ -286,6 +305,29 @@ const App = (function (ItemCtrl, UICtrl) {
         document
             .querySelector(UISelectors.updateBtn)
             .addEventListener("click", itemUpdateSubmit);
+
+        // delete button event
+        document
+            .querySelector(UISelectors.deleteBtn)
+            .addEventListener("click", itemDeleteSubmit);
+
+        // Back button event
+        document
+            .querySelector(UISelectors.backBtn)
+            .addEventListener("click", function (e) {
+                UICtrl.clearInput();
+
+                document.querySelector(UISelectors.updateBtn).style.display =
+                    "none";
+                document.querySelector(UISelectors.deleteBtn).style.display =
+                    "none";
+                document.querySelector(UISelectors.backBtn).style.display =
+                    "none";
+                document.querySelector(UISelectors.addBtn).style.display =
+                    "inline";
+
+                e.preventDefault();
+            });
     };
 
     // Add item submit function
@@ -363,6 +405,29 @@ const App = (function (ItemCtrl, UICtrl) {
 
         // clear the edit state
         UICtrl.clearEditState();
+
+        e.preventDefault();
+    };
+
+    // create the item delete submit function
+    const itemDeleteSubmit = function (e) {
+        // get current item
+        const currentItem = ItemCtrl.getCurrentItem();
+
+        // delete from data structure
+        ItemCtrl.deleteItem(currentItem.id);
+
+        // delete from UI
+        UICtrl.deleteListItem(currentItem.id);
+
+        // clear the edit state
+        UICtrl.clearEditState();
+
+        // Get total calories
+        const totalCalories = ItemCtrl.getTotalCalories();
+
+        // Add total cal to the UI
+        UICtrl.showTotalCalories(totalCalories);
 
         e.preventDefault();
     };
