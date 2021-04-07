@@ -38,6 +38,21 @@ const StorageCtrl = (function () {
             }
             return items;
         },
+        // create the update item storage function
+        updateItemStorage: function (updatedItem) {
+            // get the items
+            let items = JSON.parse(localStorage.getItem("items"));
+
+            // loop through each item and splice the old one while using the updated one instead
+            items.forEach((item, index) => {
+                if (updatedItem.id === item.id) {
+                    items.splice(index, 1, updatedItem);
+                }
+            });
+
+            // reset ls
+            localStorage.setItem("items", JSON.stringify(items));
+        },
     };
 })();
 
@@ -465,6 +480,9 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
 
         // Add total cal to the UI
         UICtrl.showTotalCalories(totalCalories);
+
+        // update local storage
+        StorageCtrl.updateItemStorage(updatedItem);
 
         // clear the edit state
         UICtrl.clearEditState();
