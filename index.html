@@ -14,7 +14,7 @@
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous"
         />
-        <style></style>
+        <link rel="stylesheet" href="style.css" />
         <title>Tracalorie | Meal & Calorie Tracker</title>
     </head>
     <body>
@@ -44,22 +44,30 @@
                     <span class="card-title">Add Meal / Food Item</span>
                     <form class="col">
                         <div class="row">
-                            <div class="input-field col s6">
-                                <input
-                                    type="text"
-                                    placeholder="Add Item"
-                                    id="item-name"
-                                />
-                                <label for="item-name">Meal</label>
+                            <div class="flex-align">
+                                <div class="input-field col s6">
+                                    <input
+                                        type="text"
+                                        placeholder="Add Item"
+                                        id="item-name"
+                                    />
+                                </div>
+                                <div class="input-field col s6">
+                                    <input
+                                        type="number"
+                                        placeholder="Add Calories"
+                                        id="item-calories"
+                                    />
+                                </div>
+                                <div class="input-field col s6">
+                                    <input
+                                        type="date"
+                                        placeholder="Add Date"
+                                        id="item-date"
+                                    />
+                                </div>
                             </div>
-                            <div class="input-field col s6">
-                                <input
-                                    type="number"
-                                    placeholder="Add Calories"
-                                    id="item-calories"
-                                />
-                                <label for="item-calories">Calories</label>
-                            </div>
+
                             <button
                                 class="add-btn btn orange darken-3"
                                 style="padding: 0px 30px 0px 30px"

@@ -76,10 +76,11 @@ const StorageCtrl = (function () {
 // Item Controller
 const ItemCtrl = (function () {
     // Item Constructor with id, name, calories
-    const Item = function (id, name, calories) {
+    const Item = function (id, name, calories, date) {
         this.id = id;
         this.name = name;
         this.calories = calories;
+        this.date = date;
     };
 
     // Data Structure / State with items, current item and total calories + hard-coded data
@@ -96,7 +97,7 @@ const ItemCtrl = (function () {
             return data.items;
         },
         // add item function
-        addItem: function (name, calories) {
+        addItem: function (name, calories, date) {
             let ID;
 
             // create id
@@ -110,7 +111,7 @@ const ItemCtrl = (function () {
             calories = parseInt(calories);
 
             // Create new item and push it to the data items
-            newItem = new Item(ID, name, calories);
+            newItem = new Item(ID, name, calories, date);
 
             data.items.push(newItem);
 
@@ -132,7 +133,7 @@ const ItemCtrl = (function () {
             return found;
         },
         // create update item function
-        updateItem: function (name, calories) {
+        updateItem: function (name, calories, date) {
             // calories to number
             calories = parseInt(calories);
 
@@ -144,6 +145,7 @@ const ItemCtrl = (function () {
                 if (item.id === data.currentItem.id) {
                     item.name = name;
                     item.calories = calories;
+                    item.date = date;
                     found = item;
                 }
             });
@@ -208,6 +210,7 @@ const UICtrl = (function () {
         backBtn: ".back-btn",
         clearBtn: ".clear-btn",
         itemNameInput: "#item-name",
+        itemDateInput: "#item-date",
         itemCaloriesInput: "#item-calories",
         totalCalories: ".total-calories",
         editBtn: "edit-item",
@@ -222,7 +225,8 @@ const UICtrl = (function () {
             items.forEach(function (item) {
                 html += `
                 <li class="collection-item" id="item-${item.id}">
-                    <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+                    <strong>${item.name}: </strong> <em>${item.calories} Calories,</em>
+                    <strong> Date: </strong><em>${item.date}</em>
                     <a href="#" class="secondary-content"
                         ><i class="edit-item fa fa-pencil"></i
                     ></a>
@@ -239,6 +243,7 @@ const UICtrl = (function () {
                 name: document.querySelector(UISelectors.itemNameInput).value,
                 calories: document.querySelector(UISelectors.itemCaloriesInput)
                     .value,
+                date: document.querySelector(UISelectors.itemDateInput).value,
             };
         },
         // create add list item function
@@ -259,7 +264,9 @@ const UICtrl = (function () {
             // Add HTML, just what's inside
             li.innerHTML = `
             <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
-            <a href="#" class="secondary-content"
+            <strong> Date: </strong><em>${item.date}</em>
+            <a href="#" 
+            class="secondary-content"
                 ><i class="edit-item fa fa-pencil"></i
             ></a>
             `;
@@ -284,6 +291,7 @@ const UICtrl = (function () {
                 if (itemID === `item-${item.id}`) {
                     document.querySelector(`#${itemID}`).innerHTML = `
                     <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+                    <strong> Date: </strong><em>${item.date}</em>
                     <a href="#" class="secondary-content"
                         ><i class="edit-item fa fa-pencil"></i
                     ></a>
@@ -301,6 +309,7 @@ const UICtrl = (function () {
         clearInput: function () {
             document.querySelector(UISelectors.itemNameInput).value = "";
             document.querySelector(UISelectors.itemCaloriesInput).value = "";
+            document.querySelector(UISelectors.itemDateInput).value = "";
         },
         // create the add item to form function
         addItemToForm: function () {
@@ -310,6 +319,9 @@ const UICtrl = (function () {
             document.querySelector(
                 UISelectors.itemCaloriesInput
             ).value = ItemCtrl.getCurrentItem().calories;
+            document.querySelector(
+                UISelectors.itemDateInput
+            ).value = ItemCtrl.getCurrentItem().date;
             UICtrl.showEditState();
         },
         //create remove items function
@@ -428,9 +440,13 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
         const input = UICtrl.getItemInput();
 
         // Check for name and calories input
-        if (input.name !== "" && input.calories !== "") {
+        if (input.name !== "" && input.calories !== "" && input.date !== "") {
             // Add Item
-            const newItem = ItemCtrl.addItem(input.name, input.calories);
+            const newItem = ItemCtrl.addItem(
+                input.name,
+                input.calories,
+                input.date
+            );
 
             // Add item to UI list
             UICtrl.addListItem(newItem);
@@ -487,7 +503,11 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
         const input = UICtrl.getItemInput();
 
         // update item
-        const updatedItem = ItemCtrl.updateItem(input.name, input.calories);
+        const updatedItem = ItemCtrl.updateItem(
+            input.name,
+            input.calories,
+            input.date
+        );
 
         // Update ui
         UICtrl.updateListItem(updatedItem);
